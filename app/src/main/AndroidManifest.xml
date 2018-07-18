@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".view.ViewPositionActivity" />
         <activity android:name=".motionevent.MotionEventActivity" />
-        <activity android:name=".gesturedetector.GestureDetectorActivity"></activity>
+        <activity android:name=".gesturedetector.GestureDetectorActivity" />
+        <activity android:name=".scroller.ScrollLinearLayoutActivity"></activity>
     </application>
 
 </manifest>

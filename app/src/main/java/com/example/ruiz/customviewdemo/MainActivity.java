@@ -8,6 +8,7 @@ import android.view.View;
 import com.example.ruiz.customviewdemo.gesturedetector.GestureDetectorActivity;
 import com.example.ruiz.customviewdemo.gesturedetector.GestureDetectorView;
 import com.example.ruiz.customviewdemo.motionevent.MotionEventActivity;
+import com.example.ruiz.customviewdemo.scroller.ScrollLinearLayoutActivity;
 import com.example.ruiz.customviewdemo.view.ViewPositionActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void goGestureDetector(View view){
         Intent intent = new Intent(this, GestureDetectorActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void goScrollLinearLayout(View view){
+        Intent intent = new Intent(this, ScrollLinearLayoutActivity.class);
         startActivity(intent);
     }
 }

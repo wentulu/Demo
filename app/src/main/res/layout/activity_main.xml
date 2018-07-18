@@ -26,4 +26,9 @@
         android:layout_height="wrap_content"
         android:onClick="goGestureDetector"
         android:text="Go Gesture Detector View"/>
+
+    <Button android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Go ScrollLinearLayout"
+        android:onClick="goScrollLinearLayout"/>
 </TableLayout>
