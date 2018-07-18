@@ -18,12 +18,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="goMotionEvent"
-        android:text="Go Position View"/>
+        android:text="Go Motion Event View"/>
 
     <Button
         android:id="@+id/gesture_detector_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="goGestureDetector"
-        android:text="Go Position View"/>
+        android:text="Go Gesture Detector View"/>
 </TableLayout>

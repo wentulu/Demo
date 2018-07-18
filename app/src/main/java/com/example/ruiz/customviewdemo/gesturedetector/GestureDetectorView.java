@@ -49,6 +49,11 @@ public class GestureDetectorView extends ViewGroup{
 
     }
 
+    /**
+     * 双击时doubleTap只会调用一次
+     * 而doubleTapEvent会会多次调用
+     *
+     * */
     GestureDetector.SimpleOnGestureListener simpleOnGestureListener = new GestureDetector.SimpleOnGestureListener(){
 
         @Override
@@ -63,12 +68,19 @@ public class GestureDetectorView extends ViewGroup{
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            Log.e(TAG,"double tap");
+            Log.e(TAG,"double tap"+e.getAction());
             return true;
         }
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
+            Log.e(TAG,"Single Tap Confirmed"+e.getAction());
+            return true;
+        }
+
+        @Override
+        public boolean onDoubleTapEvent(MotionEvent e) {
+            Log.e(TAG,"Double Tap Event"+e.getAction());
             return true;
         }
 
