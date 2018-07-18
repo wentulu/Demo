@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.example.ruiz.customviewdemo.gesturedetector.GestureDetectorView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <Button
+        android:id="@+id/position_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="goPositionView"
+        android:text="Go Position View"/>
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/motion_event_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="goMotionEvent"
+        android:text="Go Position View"/>
+
+    <Button
+        android:id="@+id/gesture_detector_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="goGestureDetector"
+        android:text="Go Position View"/>
+</TableLayout>

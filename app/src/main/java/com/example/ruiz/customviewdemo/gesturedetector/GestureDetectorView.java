@@ -32,8 +32,13 @@ public class GestureDetectorView extends ViewGroup{
 
 
     @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return true;
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
-         mGestureDetector.onTouchEvent(event);
+         boolean consum = mGestureDetector.onTouchEvent(event);
          return true;
     }
 

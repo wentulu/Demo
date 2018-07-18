@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.ViewPositionActivity" />
+        <activity android:name=".motionevent.MotionEventActivity" />
+        <activity android:name=".gesturedetector.GestureDetectorActivity"></activity>
     </application>
 
 </manifest>
