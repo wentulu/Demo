@@ -3,18 +3,31 @@ package com.example.ruiz.customviewdemo.scroller;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
+import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
 
-public class ScrollerLinearLayout extends LinearLayout {
+public class ScrollerLinearLayout extends ViewGroup {
 
 
     private final String TAG = ScrollerLinearLayout.class.getSimpleName();
 
     private float mLastX, mLastY;
 
+    private float mLastInterceptX, mLastInterceptY;
+
     private Scroller scroller = new Scroller(getContext());
+
+    private int contentHeight = 0, height;
+
+    private VelocityTracker velocityTracker = VelocityTracker.obtain();
+
+
+    int touchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
 
     public ScrollerLinearLayout(Context context) {
         this(context, null);
@@ -33,25 +46,56 @@ public class ScrollerLinearLayout extends LinearLayout {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
 //        super.onLayout(changed, l, t, r, b);
         for (int i = 0; i < getChildCount(); i++) {
-            if (getOrientation() == HORIZONTAL) {
-                int scrollX = getScrollX();
-            } else {
-                int scrollY = getScrollY();
-                getChildAt(i).layout(0, scrollY + i * getMeasuredHeight(), getMeasuredWidth(), scrollY + getMeasuredHeight() * (i + 1));
-            }
+
+            int scrollY = getScrollY();
+            getChildAt(i).layout(0, scrollY + i * getMeasuredHeight(), getMeasuredWidth(), scrollY + getMeasuredHeight() * (i + 1));
+
         }
     }
 
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        contentHeight = getMeasuredHeight() * 3;
+        height = getMeasuredHeight();
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
-            return true;
-        } else if (ev.getAction() == MotionEvent.ACTION_UP) {
-            return false;
-        } else {
-            return false;
+
+        float x = ev.getX();
+        float y = ev.getY();
+
+        boolean intercepted = false;
+
+        switch (ev.getAction()) {
+
+            case MotionEvent.ACTION_DOWN:
+
+                intercepted = false;
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                if (Math.abs(y - mLastInterceptY) > touchSlop) {
+                    intercepted = true;
+                } else {
+                    intercepted = false;
+                }
+
+                break;
+
+            case MotionEvent.ACTION_UP:
+                intercepted = false;
+                break;
         }
+
+        mLastX = x;
+        mLastY = y;
+        mLastInterceptX = x;
+        mLastInterceptY = y;
+
+        return intercepted;
     }
 
     @Override
@@ -63,55 +107,61 @@ public class ScrollerLinearLayout extends LinearLayout {
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX(),
                 y = event.getY();
-
+        int scrollY;
+        velocityTracker.addMovement(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mLastX = x;
-                mLastY = y;
                 if (!scroller.isFinished()) {
                     scroller.abortAnimation();
                 }
+                mLastX = x;
+                mLastY = y;
                 return true;
             case MotionEvent.ACTION_MOVE:
-                if (getOrientation() == HORIZONTAL) {
-                    scrollBy(-(int) (x - mLastX), 0);
-                } else {
 
-                    scrollBy(0, -(int) (y - mLastY));
+                scrollY = getScrollY();
+                Log.e(TAG, "scrollY=" + scrollY);
+                float distX = mLastY - y;
+                Log.e(TAG, "distY=" + distX);
+                if (Math.abs(distX) > touchSlop) {
+                    if (distX > 0) {
+                        if (scrollY + distX >= contentHeight - height) {
+//                            distX = contentHeight - height - scrollY;
+                        }
+                        scrollBy(0, (int) distX);
+                    } else {
+                        if (scrollY < Math.abs(distX)) {
+//                            distX = -scrollY;
+                        }
+                        scrollBy(0, (int) distX);
+                    }
                 }
                 mLastX = x;
                 mLastY = y;
+
                 return true;
             case MotionEvent.ACTION_UP:
-                if (getOrientation() == HORIZONTAL) {
-                    smoothScroll((int) (event.getX() - mLastX), 0);
-                } else {
-                    smoothScroll(0, (int) Math.ceil(event.getY() - mLastY));
+                scrollY = getScrollY();
+                if (scrollY < 0) {
+                    smoothScroll(0, scrollY);
+                } else if (scrollY > height * 2) {
+                    smoothScroll(0, scrollY - height * 2);
                 }
                 mLastX = x;
                 mLastY = y;
-                invalidate();
                 return true;
-
         }
+        mLastX = x;
+        mLastY = y;
+        return true;
 
-
-        return super.onTouchEvent(event);
     }
 
 
     private void smoothScroll(int distX, int distY) {
-
-        int scrollX = getScrollX();
         int scrollY = getScrollY();
-        if (getOrientation() == HORIZONTAL) {
-            int delta = distX - scrollX;
-            scroller.startScroll(scrollX, 0, distX, 0, 1000);
-        } else {
-            int delta = scrollY - distY;
-            scroller.startScroll(0, scrollY, 0, -distY, 1000);
-        }
-
+        scroller.startScroll(0, scrollY, 0, -distY, 200);
+        invalidate();
     }
 
     @Override
