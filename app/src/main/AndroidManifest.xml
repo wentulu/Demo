@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ruiz.customviewdemo">
 
+
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +22,9 @@
         <activity android:name=".view.ViewPositionActivity" />
         <activity android:name=".motionevent.MotionEventActivity" />
         <activity android:name=".gesturedetector.GestureDetectorActivity" />
-        <activity android:name=".scroller.ScrollLinearLayoutActivity"></activity>
+        <activity android:name=".scroller.ScrollLinearLayoutActivity" />
+        <activity android:name=".webmessageport.WebMessagePortActivity" />
+        <activity android:name=".annotation.AnnotationActivity"></activity>
     </application>
 
 </manifest>

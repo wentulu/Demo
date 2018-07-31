@@ -31,4 +31,9 @@
         android:layout_height="wrap_content"
         android:text="Go ScrollLinearLayout"
         android:onClick="goScrollLinearLayout"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="install unknown package"
+        android:onClick="installUnknowm"/>
 </TableLayout>

@@ -1,6 +1,8 @@
 package com.example.ruiz.customviewdemo;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -42,4 +44,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ScrollLinearLayoutActivity.class);
         startActivity(intent);
     }
+
+    public void installUnknowm(View view){
+        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:"+getPackageName()));
+        startActivity(intent);
+    }
+
 }
